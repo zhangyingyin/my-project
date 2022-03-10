@@ -461,7 +461,16 @@ const userNav = options => {
       },
       component: 'Workplace'
     },
-
+    {
+      name: 'config',
+      parentId: 1,
+      id: 8,
+      meta: {
+        title: 'config',
+        show: true
+      },
+      component: 'Config'
+    },
     // form
     {
       name: 'form',

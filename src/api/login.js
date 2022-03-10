@@ -25,9 +25,8 @@ const userApi = {
  * @returns {*}
  */
 export function login (parameter) {
-  return axios({
-    //url: '/auth/login',
-    url: '?service=App.User.login',
+  return request({
+    url: userApi.Login,
     method: 'post',
     data: parameter
   })
@@ -41,14 +40,10 @@ export function getSmsCaptcha (parameter) {
   })
 }
 
-export function getInfo (username) {
-  return axios({
-    //url: '/user/info',
-    url: '?service=App.User.info',
-    method: 'post',
-    data: {
-      username
-    },
+export function getInfo () {
+  return request({
+    url: userApi.UserInfo,
+    method: 'get',
     headers: {
       'Content-Type': 'application/json;charset=UTF-8'
     }

@@ -23,25 +23,25 @@ router.beforeEach((to, from, next) => {
       next({ path: defaultRoutePath })
       NProgress.done()
     } else {
-      // TODO login 登录:用户已登录, 但尚未获取到用户信息
-      if (!store.getters.loadedUserInfoFromBackend) {
-        // TODO login 登录:登录成功之后, GetInfo获取用户基本信息
+      // check login user.roles is null
+      if (store.getters.roles.length === 0) {
+        // request login userInfo
         store
           .dispatch('GetInfo')
           .then(res => {
-            console.log('permission.js,res:'+JSON.stringify(res))
-            //const menuPermissionList = res.result && res.result.menuPermissionList
-            const menuPermissionList = res.data && res.data.menuPermissionList
-            console.log('permission.js,res.result.menuPermissionList'+menuPermissionList)
-            // TODO login 登录:用户基本信息获取成功之后, 获取路由信息(菜单信息)
-            store.dispatch('GenerateRoutes', { menuPermissionList }).then(() => {
-              // 根据菜单标识集合生成可访问的路由表
+            const roles = res.result && res.result.role
+            // generate dynamic router
+            store.dispatch('GenerateRoutes', { roles }).then(() => {
+              // 根据roles权限生成可访问的路由表
               // 动态添加可访问路由表
-              router.addRoutes(store.getters.addRouters)
-              // TODO login 登录:获取url中的redirect参数,有redirect参数值,则转入redirect指定的界面
+              // VueRouter@3.5.0+ New API
+              store.getters.addRouters.forEach(r => {
+                router.addRoute(r)
+              })
+              // 请求带有 redirect 重定向时，登录自动重定向到该地址
               const redirect = decodeURIComponent(from.query.redirect || to.path)
               if (to.path === redirect) {
-                // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
+                // set the replace: true so the navigation will not leave a history record
                 next({ ...to, replace: true })
               } else {
                 // 跳转到目的路由
@@ -50,13 +50,13 @@ router.beforeEach((to, from, next) => {
             })
           })
           .catch(() => {
-            // TODO login 登录:用户基本信息获取失败的处理
             notification.error({
               message: '错误',
               description: '请求用户信息失败，请重试'
             })
+            // 失败时，获取用户信息失败时，调用登出，来清空历史保留信息
             store.dispatch('Logout').then(() => {
-              next({ path: '/user/login', query: { redirect: to.fullPath } })
+              next({ path: loginRoutePath, query: { redirect: to.fullPath } })
             })
           })
       } else {

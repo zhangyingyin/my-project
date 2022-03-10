@@ -119,7 +119,7 @@ export default {
       // this.form.resetFields()
     },
     // 提交登录信息
-    // 登录验证码 12345
+    // 账户名：任意合法手机号； 登录验证码 12345
     handleSubmit (e) {
       e.preventDefault()
       const {
