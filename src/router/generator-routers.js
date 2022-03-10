@@ -81,7 +81,6 @@ const rootRouter = {
  * @returns {Promise<Router>}
  */
 export const generatorDynamicRouter = token => {
-  console.log('动态生成菜单')
   return new Promise((resolve, reject) => {
     loginService
       .getCurrentUserNav(token)
@@ -114,7 +113,6 @@ export const generatorDynamicRouter = token => {
  * @returns {*}
  */
 export const generator = (routerMap, parent) => {
-  console.log('格式化树形结构数据')
   return routerMap.map(item => {
     const { title, show, hideChildren, hiddenHeaderContent, target, icon } = item.meta || {}
     const currentRouter = {
@@ -166,7 +164,6 @@ export const generator = (routerMap, parent) => {
  * @param parentId 父ID
  */
 const listToTree = (list, tree, parentId) => {
-  console.log('数组转树形结构')
   list.forEach(item => {
     // 判断是否为父级菜单
     if (item.parentId === parentId) {

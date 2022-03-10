@@ -101,26 +101,8 @@ const vueConfig = {
 
   devServer: {
     // development server port 8000
-    open :true,//编译后默认打开浏览器
-    // host:'127.0.0.1',//域名
-    port: 8080,//端口
-    https:false,//是否https
-    //显示警告和错误
-    // overlay:{
-    //   warnings:false,
-    //   errors:true
-    // },
-    // proxy: {
-    //     '/api': {
-    //     target: '',
-    //     ws: false,//是否支持websocket
-    //     changeOrigin: true,  //开启代理，是否跨域
-    //     secure:false,//如果是https接口，需要配置这个
-    //     pathRewrite: {
-    //       '^/api': ''  //需要rewrite的
-    //     }
-    //   }
-    // }
+    port: 8000,
+    host: '127.0.0.1'
     // If you want to turn on the proxy, please remove the mockjs /src/main.jsL11
     // proxy: {
     //   '/api': {

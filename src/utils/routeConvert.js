@@ -17,7 +17,6 @@ export function convertRoutes (nodes) {
 
       node.children.forEach(child => {
         // 转化相对路径
-        console.error('child', child)
         if (child.path[0] !== '/' && !child.path.startsWith('http')) {
           child.path = node.path.replace(/(\w*)[/]*$/, `$1/${child.path}`)
         }

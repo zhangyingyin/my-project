@@ -53,7 +53,6 @@
 </template>
 
 <script>
-import { asyncRouterMap } from '@/config/router.config.js'
 import { SettingDrawer, updateTheme } from '@ant-design-vue/pro-layout'
 import { i18nRender } from '@/locales'
 import { mapState } from 'vuex'
@@ -116,7 +115,6 @@ export default {
     })
   },
   created () {
-    // const routes = asyncRouterMap.find((item) => item.path === '/')
     const routes = this.mainMenu.find(item => item.path === '/')
     this.menus = (routes && routes.children) || []
     // 处理侧栏收起状态
